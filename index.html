@@ -5,71 +5,211 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RECURSO EXTRAORDINARIO DE INVITACIÓN</title>
     <style>
-        body { font-family: 'Times New Roman', Times, serif; background-color: #f4f1ea; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; overflow: hidden; color: #333; }
-        .card { background: #fff; padding: 40px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: center; max-width: 450px; width: 90%; position: relative; border-top: 10px solid #8b0000; }
-        .legal-header { text-align: left; margin-bottom: 25px; border-bottom: 1px solid #ddd; padding-bottom: 10px; }
-        .legal-header h1 { font-size: 16px; margin: 0; text-transform: uppercase; }
-        .legal-header p { font-size: 12px; margin: 2px 0; color: #777; font-style: italic;}
-        img { width: 120px; height: 120px; object-fit: contain; margin-bottom: 25px; }
-        h2 { font-size: 20px; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; color: #8b0000; }
-        p.main-text { font-size: 16px; margin-bottom: 30px; line-height: 1.6; text-align: justify; }
-        .btn-container { display: flex; justify-content: center; gap: 15px; height: 50px; position: relative; margin-top: 20px;}
-        button { padding: 12px 28px; font-size: 14px; font-weight: bold; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; transition: all 0.2s ease; font-family: sans-serif;}
-        .btn-yes { background-color: #fdfdfd; color: #333; }
-        .btn-yes:hover { background-color: #f0f0f0; border-color: #bbb; }
-        .btn-no { background-color: #8b0000; color: white; position: absolute; border: none;}
-        .timestamp-box { background-color: #f9f9f9; border: 1px solid #ddd; padding: 15px; border-radius: 4px; margin-top: 25px; text-align: left;}
-        .timestamp-label { font-size: 12px; color: #777; font-weight: bold; text-transform: uppercase; margin-bottom: 5px;}
-        .timestamp { font-size: 14px; color: #555; }
-        .legal-seal { font-size: 12px; color: #999; font-style: italic; margin-top: 10px; text-align: right;}
+        body { 
+            font-family: 'Times New Roman', Times, serif; 
+            background-color: #f4f1ea; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100vh; 
+            margin: 0; 
+            overflow: hidden; 
+            color: #333; 
+        }
+        .card { 
+            background: #fff; 
+            padding: 35px; 
+            border-radius: 12px; 
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15); 
+            text-align: center; 
+            max-width: 440px; 
+            width: 90%; 
+            position: relative; 
+            border-top: 12px solid #8b0000; 
+        }
+        .legal-header { 
+            text-align: left; 
+            margin-bottom: 20px; 
+            border-bottom: 2px double #ddd; 
+            padding-bottom: 10px; 
+        }
+        .legal-header h1 { font-size: 15px; margin: 0; text-transform: uppercase; letter-spacing: 0.5px;}
+        .legal-header p { font-size: 11px; margin: 3px 0; color: #666; font-style: italic;}
+        
+        /* Contenedor de Stickers Principales */
+        .sticker-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        .main-sticker { width: 130px; height: 130px; object-fit: contain; }
+        
+        /* Mini stickers flotantes decorativos */
+        .badge-sticker {
+            position: absolute;
+            width: 45px;
+            height: 45px;
+            bottom: -10px;
+            right: -10px;
+            animation: float 2s ease-in-out infinite;
+        }
+
+        h2 { font-size: 19px; margin: 15px 0 10px 0; text-transform: uppercase; letter-spacing: 1px; color: #8b0000; }
+        p.main-text { font-size: 15px; margin-bottom: 25px; line-height: 1.5; text-align: justify; }
+        
+        .btn-container { display: flex; justify-content: center; gap: 15px; height: 55px; position: relative; margin-top: 15px;}
+        
+        button { 
+            padding: 12px 24px; 
+            font-size: 13px; 
+            font-weight: bold; 
+            border: 2px solid #8b0000; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            transition: all 0.2s ease; 
+            font-family: sans-serif;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-yes { background-color: #8b0000; color: white; }
+        .btn-yes:hover { background-color: #a01a1a; transform: scale(1.03); }
+        .btn-no { background-color: #fff; color: #8b0000; position: absolute; }
+
+        /* Barra de Estado inferior (Sticker Dock) */
+        .sticker-dock {
+            margin-top: 30px;
+            background: #f9f8f3;
+            border: 1px dashed #ccc;
+            padding: 10px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+        .dock-title { font-size: 10px; color: #999; text-transform: uppercase; font-family: sans-serif; letter-spacing: 1px; margin-bottom: 5px;}
+        .dock-stickers { display: flex; gap: 15px; justify-content: center;}
+        .dock-stickers img { width: 30px; height: 30px; opacity: 0.4; transition: opacity 0.3s; }
+        .dock-stickers img.active { opacity: 1; transform: scale(1.1); }
+
+        .timestamp-box { background-color: #fffdf7; border: 1px solid #8b0000; padding: 12px; border-radius: 4px; margin-top: 20px; text-align: left; position: relative;}
+        .timestamp-label { font-size: 11px; color: #8b0000; font-weight: bold; text-transform: uppercase; margin-bottom: 3px;}
+        .timestamp { font-size: 13px; color: #444; font-weight: bold;}
+        .legal-seal { font-size: 11px; color: #aaa; font-style: italic; margin-top: 15px; text-align: right;}
+        
         .hidden { display: none !important; }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+            100% { transform: translateY(0px); }
+        }
     </style>
 </head>
 <body>
     <div class="card">
         <div class="legal-header">
             <h1>JUICIO DE INVITACIÓN EXTRAORDINARIA</h1>
-            <p>AUTOS: [INVITANTE] vs. LIC. [ELLA] | CITA DE FIN DE SEMANA</p>
+            <p>AUTOS: PROPOCHENTE v. LICENCIADA | MATERIA: CIVIL/TACOS</p>
         </div>
 
-        <!-- PANTALLA 1: Comparecencia Inicial -->
+        <!-- PANTALLA 1: Petición Inicial -->
         <div id="step1">
-            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3N5Ym03cXN2OHI3eW90b290cjF6NXN0ZXFpOHp3b3Bjd3Zid3R0diZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif" alt="Gatito pensando legal">
+            <div class="sticker-container">
+                <!-- Sticker de osito abogado pensando -->
+                <img class="main-sticker" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3N5Ym03cXN2OHI3eW90b290cjF6NXN0ZXFpOHp3b3Bjd3Zid3R0diZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif" alt="Juez">
+                <!-- Mini sticker de balanza -->
+                <img class="badge-sticker" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHI3OXF0dzV5b3J6cHZwd25mNDg4eXdtNzh5OHc3cTRwZXRidGhiZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/e491F0In6Xo6XyqG7R/giphy.gif" alt="Balanza">
+            </div>
             <h2>AUDIENCIA DE AVENIMIENTO</h2>
-            <p class="main-text">Señora abogada, ¿se encuentra su agenda legal libre de compromisos procesales o audiencias agendadas para este próximo fin de semana?</p>
+            <p class="main-text">Señora abogada, se solicita formalmente su comparecencia. ¿Se encuentra su agenda libre de compromisos o audiencias para este próximo fin de semana?</p>
             <div class="btn-container" style="align-items: center;">
-                <button class="btn-yes" onclick="nextStep(2)">LIBRE de Compromisos</button>
-                <button class="btn-no" id="btnNo" onmouseover="moveButton()">CON Audiencia Agendada</button>
+                <button class="btn-yes" onclick="nextStep()">LIBRE DE COMPROMISOS</button>
+                <button class="btn-no" id="btnNo" onmouseover="moveButton()">CON AUDIENCIA AGENDADA</button>
             </div>
         </div>
 
-        <!-- PANTALLA 2: Términos y Condiciones -->
+        <!-- PANTALLA 2: Selección de Jurisdicción -->
         <div id="step2" class="hidden">
-            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW9scXdrYm9pY3g5b3I4bXN6cm95bms0cHZubmptb3RwY3V5MnV3NiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/29bKyyjDKSfYt17d8o/giphy.gif" alt="Gatito feliz legal">
-            <h2>RATIFICACIÓN DE PETICIÓN</h2>
-            <p class="main-text">Proceda a ratificar la petición inicial eligiendo una de las siguientes opciones de ejecución obligatoria:</p>
+            <div class="sticker-container">
+                <!-- Sticker de osito feliz festejando amparo -->
+                <img class="main-sticker" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW9scXdrYm9pY3g5b3I4bXN6cm95bms0cHZubmptb3RwY3V5MnV3NiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/29bKyyjDKSfYt17d8o/giphy.gif" alt="Festejo">
+            </div>
+            <h2>RATIFICACIÓN DE LA VÍA</h2>
+            <p class="main-text">Habiendo declarado la disponibilidad de tiempo, proceda a elegir la jurisdicción adecuada para la ejecución del plan:</p>
             <div class="btn-container">
-                <button class="btn-yes" style="border-color: #ff9800; color: #ff9800;" onclick="finalStep('un café procesal ☕')">Por Café Procesal</button>
-                <button class="btn-yes" style="border-color: #e91e63; color: #e91e63;" onclick="finalStep('unos tacos de amparo 🌮')">Por Tacos de Amparo</button>
+                <button class="btn-yes" style="background-color: #ff9800; border-color: #e68a00;" onclick="finalStep('un café procesal ☕')">Café Procesal</button>
+                <button class="btn-yes" style="background-color: #e91e63; border-color: #d81b60;" onclick="finalStep('unos tacos de amparo 🌮')">Tacos de Amparo</button>
             </div>
         </div>
 
-        <!-- PANTALLA 3: Auto Final y Notificación -->
+        <!-- PANTALLA 3: Sentencia Fina -->
         <div id="step3" class="hidden">
-            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW9wN3p5NDV6am96bXN4OHg0dmFwZHp0ZzVwYm9pZndpZzZ0ZzR3NyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/9G0Adw7u6K9f635DCO/giphy.gif" alt="Legal Celebration">
-            <h2 id="finalMessage">¡SENTENCIA DEFINITIVA DICTADA!</h2>
-            <p class="main-text">Se declara la procedencia de la cita para el fin de semana. No se admiten recursos ni apelaciones.</p>
+            <div class="sticker-container">
+                <!-- Sticker de martillo de juez y celebración -->
+                <img class="main-sticker" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW9wN3p5NDV6am96bXN4OHg0dmFwZHp0ZzVwYm9pZndpZzZ0ZzR3NyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/9G0Adw7u6K9f635DCO/giphy.gif" alt="Sentencia">
+            </div>
+            <h2 id="finalMessage">¡SENTENCIA EJECUTORIADA!</h2>
+            <p class="main-text" id="finalDetails">Se declara la procedencia de la salida. Causa juzgada y completamente firme; no se admiten recursos en contra.</p>
             <div class="timestamp-box">
-                <div class="timestamp-label">Sello de Recibido y Notificado</div>
+                <div class="timestamp-label">Sello Digital de Notificación Ordinaria</div>
                 <div class="timestamp" id="timeRecord"></div>
             </div>
-            <div class="legal-seal">"Respondeat Superior" - [TU_USUARIO] v. [ELLA_USUARIO]</div>
+            <div class="legal-seal">Acta firmada digitalmente ante el Tribunal del Amor.</div>
+        </div>
+
+        <!-- PANEL DE ESTADO INFERIOR (STICKER DOCK) -->
+        <div>
+            <div class="dock-title">Panel de Evidencia de Pegatinas</div>
+            <div class="sticker-dock">
+                <div class="dock-stickers">
+                    <img id="dock1" class="active" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbTZ3dTNidzA1bHRhdmxtdHBlb3A2N2JubzV1bncyMW8wZ2pzbnd4YyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/H5wre8rM0H9p6XNveM/giphy.gif" alt="Icon1">
+                    <img id="dock2" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExZ3gyb2Rmdmd3aWd1ODdzYW96a3l2Y2phcml6MWpnbHR6NDk0cW93eSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/35DNB2E910609q4pvw/giphy.gif" alt="Icon2">
+                    <img id="dock3" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3d6cXdwdzZpd2t5YnR5eW1vNmRxNG5mdmY4aGltd2YwaTR1Nmt6MyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/XNfM70wG4b78M3zLwS/giphy.gif" alt="Icon3">
+                </div>
+            </div>
         </div>
     </div>
+
     <script>
-        function nextStep(step) { document.getElementById('step1').classList.add('hidden'); document.getElementById('step2').classList.remove('hidden'); }
-        function finalStep(opcion) { document.getElementById('step2').classList.add('hidden'); document.getElementById('step3').classList.remove('hidden'); document.getElementById('finalMessage').innerText = `¡SENTENCIA DICTADA!`; const ahora = new Date(); const opcionesFecha = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }; const opcionesHora = { hour: '2-digit', minute: '2-digit' }; const fechaFormateada = ahora.toLocaleDateString('es-ES', opcionesFecha); const horaFormateada = ahora.toLocaleTimeString('es-ES', opcionesHora); document.getElementById('timeRecord').innerText = `Suscrito el ${fechaFormateada} a las ${horaFormateada}`; document.getElementById('finalMessage').insertAdjacentHTML('afterend', `<p>Confirmada ejecución para <strong>${opcion}</strong>. Ahí nos vemos.</p>`);}
-        function moveButton() { const btnNo = document.getElementById('btnNo'); const x = Math.random() * 200 - 100; const y = Math.random() * 100 - 50; btnNo.style.transform = `translate(${x}px, ${y}px)`; }
+        function nextStep() { 
+            document.getElementById('step1').classList.add('hidden'); 
+            document.getElementById('step2').classList.remove('hidden'); 
+            
+            // Actualiza las pegatinas del panel inferior
+            document.getElementById('dock1').classList.remove('active');
+            document.getElementById('dock2').classList.add('active');
+        }
+
+        function finalStep(opcion) { 
+            document.getElementById('step2').classList.add('hidden'); 
+            document.getElementById('step3').classList.remove('hidden'); 
+            
+            // Cambiar textos y agregar opción
+            document.getElementById('finalDetails').innerHTML = `Se declara con lugar la petición de salida para disfrutar de <strong>${opcion}</strong> este fin de semana. Causa juzgada y completamente firme.`;
+            
+            // Reloj en tiempo real
+            const ahora = new Date(); 
+            const opcionesFecha = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }; 
+            const opcionesHora = { hour: '2-digit', minute: '2-digit', second: '2-digit' }; 
+            const fechaFormateada = ahora.toLocaleDateString('es-ES', opcionesFecha); 
+            const horaFormateada = ahora.toLocaleTimeString('es-ES', opcionesHora); 
+            
+            document.getElementById('timeRecord').innerText = `Notificado el ${fechaFormateada} a las ${horaFormateada}`; 
+            
+            // Activa la última pegatina del panel
+            document.getElementById('dock2').classList.remove('active');
+            document.getElementById('dock3').classList.add('active');
+        }
+
+        function moveButton() { 
+            const btnNo = document.getElementById('btnNo'); 
+            // Rango de movimiento inteligente dentro de la tarjeta
+            const x = Math.random() * 160 - 80; 
+            const y = Math.random() * 80 - 40; 
+            btnNo.style.transform = `translate(${x}px, ${y}px)`; 
+        }
     </script>
 </body>
 </html>
