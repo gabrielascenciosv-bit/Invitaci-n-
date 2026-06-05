@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RECURSO EXTRAORDINARIO DE INVITACIÓN</title>
+    <style>
+        body { font-family: 'Times New Roman', Times, serif; background-color: #f4f1ea; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; overflow: hidden; color: #333; }
+        .card { background: #fff; padding: 40px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); text-align: center; max-width: 450px; width: 90%; position: relative; border-top: 10px solid #8b0000; }
+        .legal-header { text-align: left; margin-bottom: 25px; border-bottom: 1px solid #ddd; padding-bottom: 10px; }
+        .legal-header h1 { font-size: 16px; margin: 0; text-transform: uppercase; }
+        .legal-header p { font-size: 12px; margin: 2px 0; color: #777; font-style: italic;}
+        img { width: 120px; height: 120px; object-fit: contain; margin-bottom: 25px; }
+        h2 { font-size: 20px; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; color: #8b0000; }
+        p.main-text { font-size: 16px; margin-bottom: 30px; line-height: 1.6; text-align: justify; }
+        .btn-container { display: flex; justify-content: center; gap: 15px; height: 50px; position: relative; margin-top: 20px;}
+        button { padding: 12px 28px; font-size: 14px; font-weight: bold; border: 1px solid #ccc; border-radius: 4px; cursor: pointer; transition: all 0.2s ease; font-family: sans-serif;}
+        .btn-yes { background-color: #fdfdfd; color: #333; }
+        .btn-yes:hover { background-color: #f0f0f0; border-color: #bbb; }
+        .btn-no { background-color: #8b0000; color: white; position: absolute; border: none;}
+        .timestamp-box { background-color: #f9f9f9; border: 1px solid #ddd; padding: 15px; border-radius: 4px; margin-top: 25px; text-align: left;}
+        .timestamp-label { font-size: 12px; color: #777; font-weight: bold; text-transform: uppercase; margin-bottom: 5px;}
+        .timestamp { font-size: 14px; color: #555; }
+        .legal-seal { font-size: 12px; color: #999; font-style: italic; margin-top: 10px; text-align: right;}
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="legal-header">
+            <h1>JUICIO DE INVITACIÓN EXTRAORDINARIA</h1>
+            <p>AUTOS: [INVITANTE] vs. LIC. [ELLA] | CITA DE FIN DE SEMANA</p>
+        </div>
+
+        <!-- PANTALLA 1: Comparecencia Inicial -->
+        <div id="step1">
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3N5Ym03cXN2OHI3eW90b290cjF6NXN0ZXFpOHp3b3Bjd3Zid3R0diZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif" alt="Gatito pensando legal">
+            <h2>AUDIENCIA DE AVENIMIENTO</h2>
+            <p class="main-text">Señora abogada, ¿se encuentra su agenda legal libre de compromisos procesales o audiencias agendadas para este próximo fin de semana?</p>
+            <div class="btn-container" style="align-items: center;">
+                <button class="btn-yes" onclick="nextStep(2)">LIBRE de Compromisos</button>
+                <button class="btn-no" id="btnNo" onmouseover="moveButton()">CON Audiencia Agendada</button>
+            </div>
+        </div>
+
+        <!-- PANTALLA 2: Términos y Condiciones -->
+        <div id="step2" class="hidden">
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW9scXdrYm9pY3g5b3I4bXN6cm95bms0cHZubmptb3RwY3V5MnV3NiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/29bKyyjDKSfYt17d8o/giphy.gif" alt="Gatito feliz legal">
+            <h2>RATIFICACIÓN DE PETICIÓN</h2>
+            <p class="main-text">Proceda a ratificar la petición inicial eligiendo una de las siguientes opciones de ejecución obligatoria:</p>
+            <div class="btn-container">
+                <button class="btn-yes" style="border-color: #ff9800; color: #ff9800;" onclick="finalStep('un café procesal ☕')">Por Café Procesal</button>
+                <button class="btn-yes" style="border-color: #e91e63; color: #e91e63;" onclick="finalStep('unos tacos de amparo 🌮')">Por Tacos de Amparo</button>
+            </div>
+        </div>
+
+        <!-- PANTALLA 3: Auto Final y Notificación -->
+        <div id="step3" class="hidden">
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW9wN3p5NDV6am96bXN4OHg0dmFwZHp0ZzVwYm9pZndpZzZ0ZzR3NyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/9G0Adw7u6K9f635DCO/giphy.gif" alt="Legal Celebration">
+            <h2 id="finalMessage">¡SENTENCIA DEFINITIVA DICTADA!</h2>
+            <p class="main-text">Se declara la procedencia de la cita para el fin de semana. No se admiten recursos ni apelaciones.</p>
+            <div class="timestamp-box">
+                <div class="timestamp-label">Sello de Recibido y Notificado</div>
+                <div class="timestamp" id="timeRecord"></div>
+            </div>
+            <div class="legal-seal">"Respondeat Superior" - [TU_USUARIO] v. [ELLA_USUARIO]</div>
+        </div>
+    </div>
+    <script>
+        function nextStep(step) { document.getElementById('step1').classList.add('hidden'); document.getElementById('step2').classList.remove('hidden'); }
+        function finalStep(opcion) { document.getElementById('step2').classList.add('hidden'); document.getElementById('step3').classList.remove('hidden'); document.getElementById('finalMessage').innerText = `¡SENTENCIA DICTADA!`; const ahora = new Date(); const opcionesFecha = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }; const opcionesHora = { hour: '2-digit', minute: '2-digit' }; const fechaFormateada = ahora.toLocaleDateString('es-ES', opcionesFecha); const horaFormateada = ahora.toLocaleTimeString('es-ES', opcionesHora); document.getElementById('timeRecord').innerText = `Suscrito el ${fechaFormateada} a las ${horaFormateada}`; document.getElementById('finalMessage').insertAdjacentHTML('afterend', `<p>Confirmada ejecución para <strong>${opcion}</strong>. Ahí nos vemos.</p>`);}
+        function moveButton() { const btnNo = document.getElementById('btnNo'); const x = Math.random() * 200 - 100; const y = Math.random() * 100 - 50; btnNo.style.transform = `translate(${x}px, ${y}px)`; }
+    </script>
+</body>
+</html>
